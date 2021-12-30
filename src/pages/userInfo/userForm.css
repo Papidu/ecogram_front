@@ -1,10 +1,7 @@
-.userinfo {
+.userForm {
   flex: 4;
-  height: 600px;
-  width: 60%;
   align-items: center;
   margin-top: 56px;
 }
 
-.editIcon {
-}
+

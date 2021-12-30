@@ -6,11 +6,6 @@ function UserTable() {
     const sideBar = [ 'Пользователь', 'Заказы', 'Публикации']
     return (
        <>
-        <Grid container direction='column'>
-            <Grid item>
-                <Headers/>
-            </Grid>           
-        </Grid>
         <Container direction='row' xs={2} >
             <Content/>
         </Container> 

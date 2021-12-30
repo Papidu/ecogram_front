@@ -5,6 +5,9 @@ import React from 'react'
 import SideBar from './components/sidebar/SideBar';
 import UserInfo from './pages/userInfo/UserInfo';
 import {BrowserRouter as Router,Route,Routes, Link} from "react-router-dom";
+import User from './pages/Users/User';
+
+
 function App() {
   return (
     <Router>
@@ -12,8 +15,11 @@ function App() {
       <div className='container'>
         <SideBar/>
         <Routes>
-          <Route exact path="/" element={<UserInfo/>}/>           
-          <Route exact path="/table"element={<UserTable/>}/>
+          <Route path="/" element={<UserInfo/>}/>           
+          <Route exact path="/users"element={<UserInfo/>}/>
+          <Route exact path="/user/:userId"element={<User/>}/>
+          <Route exact path="/table2"element={<UserTable/>}/>
+          
         </Routes>
       </div>
     </Router>

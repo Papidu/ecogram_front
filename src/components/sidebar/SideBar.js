@@ -1,5 +1,7 @@
 import React from 'react'
 import './sidebar.css'
+import {Link} from "react-router-dom";
+
 export default function SideBar() {
     return (
         <div className="sidebar">
@@ -7,13 +9,19 @@ export default function SideBar() {
                 <div className='sidebarMenu'>
                     <ul className="sidebarList">
                         <li className="sidebarListItem">
-                            Пользователи
+                            <Link className="sideLink" to='/users'>
+                                Пользователи
+                            </Link>                            
                         </li> 
                         <li className="sidebarListItem">
-                            Заказы
+                            <Link to='/table2'>
+                                Заказы
+                            </Link>
                         </li>
                         <li className="sidebarListItem">
-                            Публикации
+                            <Link to='/table2'>
+                                Публикации
+                            </Link>
                         </li>   
                     </ul>  
                 </div>
