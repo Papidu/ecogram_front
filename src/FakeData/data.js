@@ -63,3 +63,22 @@ export const dataTable = [
         "role": "basic_user"
     }
 ]
+
+export const fakeRole = [
+    {
+        "id": 1,
+        "role": "basic_user"
+    },
+    {
+        "id": 2,
+        "role": "admin"
+    },
+    {
+        "id": 3,
+        "role": "moder"
+    },
+    {
+        "id": 4,
+        "role": "courier"
+    },
+]

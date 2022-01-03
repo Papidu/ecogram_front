@@ -1,10 +1,14 @@
 import React, {useState, useEffect} from 'react'
-import {Button, Grid,ButtonGroup, Container, TextField} from "@mui/material" 
+import {Grid} from "@mui/material" 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import {fakeRole} from '../../FakeData/data';
+import {dataTable} from '../../FakeData/data'
+import Popup from '../../components/Controls/Popup';
+import {useForm, Form} from '../../components/Controls/useForm';
+import Controls from '../../components/Controls/Controls'
+import * as userService from '../../services/userService' 
 import {makeStyles} from "@mui/styles"
-// import { DatePicker, LocalizationProvider } from '@mui/lab';
-// import DateAdapter from '@mui/lab/AdapterDateFns';
-
-
 
 
 const useStyles = makeStyles(theme => ({
@@ -12,14 +16,18 @@ const useStyles = makeStyles(theme => ({
         '& .MuiFormControl-root': {
             width: "80%",
             margin: '5px'
-            
         }
-        
+    },
+    btn:{
+        margin: '5px',
+    },
+    label: {
+        textTransform:'none'
     }
 }))
+export default function UserForm(props) {
 
-
-export default function UserForm() {
+    const {userData=initialVlaues,setisChanged,setOpenPopup, ...other} = props;
     
     const initialVlaues = {
         id: 0,
@@ -27,95 +35,115 @@ export default function UserForm() {
         username: "",
         name: "",
         surname: "",
-        birthday: "2022-01-10",
-        role: ""
+        birthday: new Date('2021-12-30'),//new Date(),
+        role: "basic_user"
     }
-
     
-
-    const handleInputChange = (e) => {
-        const {name, value} = e.target
-        setValues({
-            ...values,
-            [name]: value
-        })
+    function setTables(item){
+        dataTable.forEach(item1 => {
+            if (item1.id === item.id) {
+                item1.role= item.role
+                return true;
+            }else return false
+        });
     }
 
-    const convertToDefEventParams = (name,value) => ({
-        target: {
-            name,value
+    const handleSubmit = (e) =>{
+        e.preventDefault()
+        if(validate()){
+            setOpenPopup(false)
         }
-    })
-    
+    }
+
     const classes= useStyles()
-    const [values, setValues] = useState(initialVlaues)
+
+    function validate(fieldValues = values){
+        let temp = {...errors}
+        if('name' in fieldValues)
+            temp.name= fieldValues.name?"": 'Обязательное поле';
+        if('surname' in fieldValues)
+            temp.surname= fieldValues.surname?"": 'Обязательное поле';
+        if('phone_number' in fieldValues)
+            temp.phone_number = fieldValues.phone_number.length > 9?"": 'Обязательное поле и минимум 11';
+        // temp.role = "basic_user";
+        setErrors({
+            ...temp
+        })
+        if(fieldValues == values)
+            setisChanged(setTables(values)) /////////////////////////////////////////////////////////// ОТправить на сервер данные в таблице
+            
+            return Object.values(temp).every(x => x== "")
+    }
+
+    const {
+        values,
+        setValues,
+        handleInputChange,
+        handleInputChangeRole,
+        handlerChangeData,
+        errors,
+        setErrors,
+    } = useForm(userData, true, validate)
+
+
+    const [startDate, setStartDate] = useState(null);
     return (
-        <form className={classes.root}>
+        <Form onSubmit={handleSubmit}>
+            {console.log('userform, values = ', values)}
             <Grid container>
                 <Grid item xs={6}>
-                    <TextField 
-                        variant="outlined"
+                    <Controls.Input
                         label="Имя"
                         name='name'
                         value= {values.name}
-                        onChange={handleInputChange}
+                        onChange={handleInputChange} 
+                        error={errors.name}
+                        disabled
                     />
-                    <TextField 
-                        variant="outlined"
+                    <Controls.Input
                         label="Фамилия"
                         name='surname'
                         value= {values.surname}
                         onChange={handleInputChange}
+                        error={errors.surname}
+                        disabled
                     />
-                    <TextField 
-                        variant="outlined"
+                    <Controls.Input
                         label="Телефон"
                         name='phone_number'
                         value= {values.phone_number}
                         onChange={handleInputChange}
+                        error={errors.phone_number}
+                        disabled
                     />
                 </Grid>
                 <Grid item xs={6}>
-                    <TextField 
-                        variant="outlined"
-                        label="Роль"
+                    <Controls.Select
                         name='role'
-                        value= {values.role}
-                        onChange={handleInputChange}
+                        label='Роль'
+                        // displayEmpty
+                        value= {userService.getRoleCollection().find(r => r.role === values.role).id}
+                        onChange={handleInputChangeRole}
+                        options={userService.getRoleCollection()}
+                    />  
+                    <DatePicker 
+                        dateFormat='yyyy-MM-dd'
+                        selected={new Date(values.birthday)} 
+                        name='birthday'
+                        onChange={(date) => handlerChangeData(date)}
+                        showYearDropdown
+                        scrollableMonthYearDropdown
+                        className='datePic'
+                        disabled
                     />
-
-                    {/* <LocalizationProvider dateAdapter={DateAdapter}>
-                        <TextField
-                                label="День рождение"
-                                type="date"
-                                name='birthday'
-                                value={values.birthday}
-                                format='YYYY-MM-DD'
-                                onChange={date => handleInputChange(convertToDefEventParams(values.birthday,date))}
-                                // defaultValue="2017-05-24"
-                                // sx={{ width: 220 }
-                        />
-                    </LocalizationProvider>
-                    <LocalizationProvider dateAdapter={DateAdapter}>
-                        <DatePicker
-                            label="Basic example"
-                            value={values.birthday}
-                            onChange={(newValue) => {
-                                setValues(newValue);
-                            }}
-                            renderInput={(params) => <TextField {...params} />}
-                        />
-                    </LocalizationProvider> */}
-                    {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <DatePicker
-                            label="Basic example"
-                            value={values.birthday}
-                            onChange={handleInputChange}
-                            renderInput={(params) => <TextField {...params} />}
-                        />
-                    </LocalizationProvider> */}
+                                      
                 </Grid>
-            </Grid>
-        </form>
+                <Controls.Button 
+                        type='submit'
+                        text='Изменить' 
+                        classes={{root:classes.btn,label:classes.label}}
+                />
+            </Grid>           
+        </Form>
     )
 }
