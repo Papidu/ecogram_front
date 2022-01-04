@@ -25,9 +25,30 @@ const useStyles = makeStyles(theme => ({
         textTransform:'none'
     }
 }))
-export default function UserForm(props) {
 
-    const {userData=initialVlaues,setisChanged,setOpenPopup, ...other} = props;
+const postUser= async (data) =>{
+    const url = 'http://vm-fd0ab233.na4u.ru:8080/users/update';
+    const header = {            
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        // mode: 'cors', // no-cors, *cors, same-origin
+        // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        // credentials: 'include', // include, *same-origin, omit
+        body: JSON.stringify(data),
+        headers: {
+        'Content-Type': 'application/json'
+    }}
+
+    try{
+        const response = await fetch(url, header);
+        const json = await response.json();
+        console.log(json)
+        // setTableData(json)
+    } catch (e){
+        console.log('Ошибка ', e)
+    }
+}
+export default function UserForm(props) {
+    const {userData=initialVlaues,setOpenPopup,setisChanged,...other} = props;
     
     const initialVlaues = {
         id: 0,
@@ -43,6 +64,7 @@ export default function UserForm(props) {
         dataTable.forEach(item1 => {
             if (item1.id === item.id) {
                 item1.role= item.role
+                // postUser()
                 return true;
             }else return false
         });
@@ -51,7 +73,9 @@ export default function UserForm(props) {
     const handleSubmit = (e) =>{
         e.preventDefault()
         if(validate()){
+            postUser([values])
             setOpenPopup(false)
+            setisChanged(true)
         }
     }
 
@@ -70,8 +94,8 @@ export default function UserForm(props) {
             ...temp
         })
         if(fieldValues == values)
-            setisChanged(setTables(values)) /////////////////////////////////////////////////////////// ОТправить на сервер данные в таблице
-            
+            setisChanged(true) /////////////////////////////////////////////////////////// ОТправить на сервер данные в таблице
+            // console.log('isCh ', isChanged)
             return Object.values(temp).every(x => x== "")
     }
 
@@ -85,7 +109,7 @@ export default function UserForm(props) {
         setErrors,
     } = useForm(userData, true, validate)
 
-
+    
     const [startDate, setStartDate] = useState(null);
     return (
         <Form onSubmit={handleSubmit}>

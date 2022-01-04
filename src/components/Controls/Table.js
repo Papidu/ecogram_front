@@ -7,7 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 
 export default function Table(props) {
-    const {setUserData, setOpenPopup,isChanged, ...other} = props;
+    const {setUserData, setOpenPopup, ...other} = props;
     const [tableData, setTableData] =useState([])
     
     
@@ -34,8 +34,32 @@ export default function Table(props) {
 
     useEffect(() => {
     //    fetch
-        setTableData(dataTable)
-    }, [isChanged])
+    const url = 'http://vm-fd0ab233.na4u.ru:8080/users';
+    const header = {            
+        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+    }}
+        const getUser=  () =>{
+            try{
+                fetch(url, header)
+                    .then((data) => data.json())
+                    .then((data) => setTableData(data))
+                // const table = await fetch(url, header);
+                // const json = await table.json();
+                // console.log(json)
+                // setTableData(json)
+            } catch (e){
+                console.log(e)
+            }
+        }
+        getUser()
+
+    }, [])
 
     const openInPopup = (id) =>{
         console.log(id)

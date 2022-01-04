@@ -14,12 +14,12 @@ export default function SideBar() {
                             </Link>                            
                         </li> 
                         <li className="sidebarListItem">
-                            <Link to='/table2'>
+                            <Link to='/orders'>
                                 Заказы
                             </Link>
                         </li>
                         <li className="sidebarListItem">
-                            <Link to='/table2'>
+                            <Link to='/posts'>
                                 Публикации
                             </Link>
                         </li>   
