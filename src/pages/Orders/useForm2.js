@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {makeStyles} from "@mui/styles"
 import {fakeRole} from '../../FakeData/data';
 
-export function useForm(initialVlaues, validateOnChange=false, validate) {
+export function useForm2(initialVlaues, validateOnChange=false, validate) {
 
  
     const [values, setValues] = useState(initialVlaues)
@@ -19,9 +19,9 @@ export function useForm(initialVlaues, validateOnChange=false, validate) {
     }
     const handleInputChangeRole = (e) => {
         const {name, value} = e.target
-        // console.log("name, value ",name, value)
+        console.log(name, value)
         const role = fakeRole.find(r => r.id === value).role
-        // console.log(name, role)
+        console.log(name, role)
         setValues({
             ...values,
             [name]: role
@@ -35,9 +35,9 @@ export function useForm(initialVlaues, validateOnChange=false, validate) {
         return year+'-'+ month + '-' + day;
     }
     const handlerChangeData = (data) =>{
-        // console.log("handlerChangeData data",data)
+        console.log(data)
         const date = formatDate(data)
-        // console.log(date)
+        console.log(date)
         // console.log(values.birthday)
         setValues({
             ...values,

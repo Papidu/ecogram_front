@@ -2,3 +2,11 @@
   color: black;
   padding-right: 0px;
 }
+
+.tableContent {
+  /* background-color: aqua; */
+  height: 700px;
+  /* align-items: center; */
+  /* align-content: center; */
+  /* justify-content: center; */
+}

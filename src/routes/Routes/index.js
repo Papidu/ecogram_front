@@ -10,6 +10,7 @@ import {
   Container,
   Grid,
 } from "@mui/material";
+import Order from "../../pages/Orders";
 // import {makeStyles} from "@mui/styles";
 // const useStyles = makeStyles((theme) => ({
 //   root: {
@@ -24,7 +25,8 @@ function MyRoutes() {
   return auth.isLoaded ? (
     <Switch>
       <Route exact path="/">
-        <Login />
+        {/* <Login /> */}
+        <UserInfo/>
       </Route>     
 
       <NotAuthRoute path="/login">
@@ -33,13 +35,16 @@ function MyRoutes() {
       <NotAuthRoute path="/users">
         <UserInfo/>
       </NotAuthRoute>
+      <NotAuthRoute path="/orders">
+        <Order/>
+      </NotAuthRoute>
       {/* <PrivateRoute path="/users">
         <UserInfo/>
       </PrivateRoute> */}
 
-      <PrivateRoute path="/orders">
-        <UserInfo/>
-      </PrivateRoute>
+      {/* <PrivateRoute path="/orders">
+        <Order/>
+      </PrivateRoute> */}
 
       <PrivateRoute path="/posts">
         <UserInfo/>

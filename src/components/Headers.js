@@ -12,14 +12,16 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 const useStyles = {
     appBarStyle: {
         backgroundColor: '#E7E7E7',
+        // alignItems:'center', 
+        justifyContent: 'space-between'
     },
 }
 const Headers = (props) => {
   const {countMail=0, countNotific=0 } = props 
     return (
         <AppBar position="static" style={useStyles.appBarStyle}>
-            <Toolbar>
-                <SVGLogo height={20} width={40} />
+            <Toolbar sx={{alignItems:'center'}}>
+                <SVGLogo height={50} width={60} sx={{margin: 15}} />
                 <Typography color='black' component="div" sx={{ flexGrow: 2 }}>Админ панель</Typography>
                 <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               <IconButton size="large" aria-label="show 4 new mails" color="inherit">

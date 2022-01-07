@@ -60,15 +60,6 @@ export default function UserForm(props) {
         role: "basic_user"
     }
     
-    function setTables(item){
-        dataTable.forEach(item1 => {
-            if (item1.id === item.id) {
-                item1.role= item.role
-                // postUser()
-                return true;
-            }else return false
-        });
-    }
 
     const handleSubmit = (e) =>{
         e.preventDefault()
@@ -109,11 +100,8 @@ export default function UserForm(props) {
         setErrors,
     } = useForm(userData, true, validate)
 
-    
-    const [startDate, setStartDate] = useState(null);
     return (
         <Form onSubmit={handleSubmit}>
-            {console.log('userform, values = ', values)}
             <Grid container>
                 <Grid item xs={6}>
                     <Controls.Input

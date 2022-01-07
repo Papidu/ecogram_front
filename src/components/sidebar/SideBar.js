@@ -18,11 +18,11 @@ export default function SideBar() {
                                 Заказы
                             </Link>
                         </li>
-                        <li className="sidebarListItem">
+                        {/* <li className="sidebarListItem">
                             <Link to='/posts'>
                                 Публикации
                             </Link>
-                        </li>   
+                        </li>    */}
                     </ul>  
                 </div>
             </div>  

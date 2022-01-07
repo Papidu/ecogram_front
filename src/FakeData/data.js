@@ -82,3 +82,40 @@ export const fakeRole = [
         "role": "courier"
     },
 ]
+
+export const getStatusCollection = () => ([
+    {
+        "status_name": "Поиск курьера",
+        "id": 1
+    },
+    {
+        "status_name": "Исполнено",
+        "id": 3
+    },
+    {
+        "status_name": "В пути",
+        "id": 2
+    },
+    {
+        "status_name": "в ожидании",
+        "id": 4
+    }
+])
+export const fakeStatus =[
+    {
+      "status_name": "Поиск курьера",
+      "id": 1
+    },
+    {
+      "status_name": "Исполнено",
+      "id": 3
+    },
+    {
+      "status_name": "В пути",
+      "id": 2
+    },
+    {
+      "status_name": "в ожидании",
+      "id": 4
+    }
+  ]
